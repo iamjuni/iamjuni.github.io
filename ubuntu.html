@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Guide to Install Ubuntu 24.04 LTS on MacBook Pro and Air</title>
+</head>
+<body>
+    <h1>Guide to Install Ubuntu 24.04 LTS on MacBook Pro & Air</h1>
+
+    <h2>Pre-Installation Checklist</h2>
+    <ul>
+        <li>Backup your data (Time Machine or external drive)</li>
+        <li>16 GB+ USB flash drive (for the Ubuntu installer)</li>
+        <li>Ethernet</li>
+        <li>USB-C hub (for newer Macs without USB-A)</li>
+        <li>Keyboard & mouse (if you're wiping macOS completely)</li>
+    </ul>
+
+    <h2>For Intel-based MacBook Pro / Air</h2>
+    
+    <h3>1. Download Ubuntu 24.04 LTS</h3>
+    <p>Go to <a href="https://www.releases.ubuntu.com/noble/" target="_blank">https://www.releases.ubuntu.com/noble/</a>, choose <strong>Ubuntu Desktop 24.04 LTS (64-bit)</strong> and download the ISO.</p>
+
+    <h3>2. Create a Bootable USB</h3>
+    <p>Use <a href="https://www.balena.io/etcher/" target="_blank">balenaEtcher</a> (Mac/Windows/Linux):</p>
+    <ul>
+        <li>Open Etcher → Select the Ubuntu ISO → Select your USB drive → Click "Flash!"</li>
+    </ul>
+
+    <h3>3. Disable Secure Boot (if applicable)</h3>
+    <p>Restart and hold <strong>Command + R</strong> to enter macOS Recovery.</p>
+    <ul>
+        <li>Go to <strong>Utilities → Startup Security Utility</strong></li>
+        <li>Select "Allow booting from external or removable media."</li>
+    </ul>
+
+    <h3>4. Boot from USB</h3>
+    <p>Insert the USB, restart your Mac, and hold <strong>Option (⌥)</strong> at startup. Select the USB labeled "EFI Boot".</p>
+
+    <h3>5. Install Ubuntu</h3>
+    <ul>
+        <li>Choose “Try Ubuntu” or go directly to “Install Ubuntu.”</li>
+        <li>Partition your drive or erase macOS if you want Ubuntu as the only OS.</li>
+        <li>Follow on-screen instructions to finish the installation.</li>
+    </ul>
+
+    <h3>6. Fix Boot Graphics Issues (Optional but Recommended)</h3>
+    <p>If Ubuntu boots to a black screen or you're seeing glitches after installation, update GRUB to add <strong>nomodeset</strong>, which helps with compatibility:</p>
+    <ol>
+        <li>Boot into Ubuntu</li>
+        <li>Open Terminal and run:</li>
+        <pre><code>sudo gedit /etc/default/grub</code></pre>
+        <li>Find the line:
+            <pre><code>GRUB_CMDLINE_LINUX_DEFAULT="quiet splash"</code></pre>
+        </li>
+        <li>Change it to:
+            <pre><code>GRUB_CMDLINE_LINUX_DEFAULT="quiet splash nomodeset"</code></pre>
+        </li>
+        <li>Save and close the file.</li>
+        <li>Update GRUB with:
+            <pre><code>sudo update-grub</code></pre>
+        </li>
+        <li>Reboot:
+            <pre><code>sudo reboot</code></pre>
+        </li>
+    </ol>
+    <p><strong>Why?</strong> The <code>nomodeset</code> option tells Ubuntu to avoid using certain graphics drivers during boot, which helps resolve black screen or boot hangs on some MacBook GPUs.</p>
